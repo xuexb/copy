@@ -10,6 +10,19 @@
  *     copy.mouseout - 滑出
  *     copy.mousedown - 按下鼠标
  *     copy.mouseup - 松开鼠标
+ *
+ * @description
+ *     1. as对外暴露的接口:
+ *         setText - 设置复制文本
+ *         setLinks - 设置链接
+ *     2. as里绑定事件, 在用户触发时使用标识来调用js触发事件
+ *     3. js对as暴露的接口: 
+ *         $.fn.copy.FLASHcallback - 事件回调, 使用标识、事件名来触发
+ *     4. 逻辑:
+ *         1. 实例化
+ *         2. 输出dom和swf到页面, 并绑定事件
+ *         3. 用户在swf元素上交互时触发事件
+ *         4. 用户在点击时触发getText事件, js使用as的接口把最新的文本设置给as, as来复制到粘贴板
  */
 
 (function ($) {
@@ -99,6 +112,7 @@
         self.$wrap = $wrap;
 
         self.reset();
+        self.setLinks();
 
         $(window).on('resize.' + id, function () {
             self.reset();
@@ -138,6 +152,25 @@
             if (self.hasOwnProperty(key)) {
                 delete self[key];
             }
+        }
+
+        return self;
+    };
+
+    /**
+     * 设置链接
+     *
+     * @param {Object} str this
+     * @return {Object} this
+     */
+    Copy.prototype.setLinks = function (links) {
+        var self = this;
+
+        links = links || self.options.links;
+
+        // 如果有链接数据, 并且当前swf有设置链接的接口则调用as代码来设置
+        if (links && links.length && self.flashElement && self.flashElement.setLinks) {
+            self.flashElement.setLinks(links);
         }
 
         return self;
@@ -219,7 +252,8 @@
                     return Copy.get(id).destroy();
                 }
 
-                return Copy.get(id).setText(options.str).reset();
+                // 否则重新设置文本和链接
+                return Copy.get(id).setText(options.str).setLinks(options.links).reset();
             }
             if (options.str !== 'destroy') {
                 new Copy(options, this);
@@ -253,9 +287,16 @@
      *
      * @type {Object}
      * @param {string} defaults.path swf所在路径
+     * @param {string|Function} defaults.str 复制文本
+     * @param {Array} defaults.links 右键链接菜单
+     * @param {string} defaults.links[].name 菜单名称
+     * @param {string} defaults.links[].url 菜单链接
+     * @param {boolean} defaults.links[].disabled 是否禁用
+     * @param {boolean} defaults.links[].border 是否需要边框
      */
     $.fn.copy.defaults = {
         path: '',
-        str: ''
+        str: '',
+        links: []
     };
 })(window.jQuery);
