@@ -160,7 +160,7 @@
     /**
      * 设置链接
      *
-     * @param {Object} str this
+     * @param {Array} links 链接数据
      * @return {Object} this
      */
     Copy.prototype.setLinks = function (links) {
@@ -179,28 +179,27 @@
     /**
      * 设置文本到当前实例, 主要用来多次初始
      *
-     * @param {Object} str this
+     * @param {string} text 文本
      * @return {Object} this
      */
-    Copy.prototype.setText = function (str) {
-        this.options.str = str;
+    Copy.prototype.setText = function (text) {
+        this.options.text = text;
         return this;
     };
 
     /**
      * 获取当前最新的文本
      *
-     * @param {Object} str this
      * @return {Object} this
      */
     Copy.prototype.getText = function () {
-        var str = this.options.str;
+        var text = this.options.text;
 
-        if ($.isFunctioin(str)) {
-            str = str.call(this.$elem.get(0));
+        if ($.isFunctioin(text)) {
+            text = text.call(this.$elem.get(0));
         }
 
-        return str;
+        return text;
     };
 
     /**
@@ -238,7 +237,7 @@
     $.fn.copy = function (options) {
         if (!$.isPlainObject(options)) {
             options = $.extend({}, $.fn.copy.defaults, {
-                str: options
+                text: options
             });
         }
 
@@ -248,14 +247,14 @@
             // 如果有缓存表示初始过
             if (id) {
                 // 如果要销毁
-                if (options.str === 'destroy') {
+                if (options.text === 'destroy') {
                     return Copy.get(id).destroy();
                 }
 
                 // 否则重新设置文本和链接
-                return Copy.get(id).setText(options.str).setLinks(options.links).reset();
+                return Copy.get(id).setText(options.text).setLinks(options.links).reset();
             }
-            if (options.str !== 'destroy') {
+            if (options.text !== 'destroy') {
                 new Copy(options, this);
             }
         });
@@ -287,7 +286,7 @@
      *
      * @type {Object}
      * @param {string} defaults.path swf所在路径
-     * @param {string|Function} defaults.str 复制文本
+     * @param {string|Function} defaults.text 复制文本
      * @param {Array} defaults.links 右键链接菜单
      * @param {string} defaults.links[].name 菜单名称
      * @param {string} defaults.links[].url 菜单链接
@@ -296,7 +295,7 @@
      */
     $.fn.copy.defaults = {
         path: '',
-        str: '',
+        text: '',
         links: []
     };
 })(window.jQuery);
