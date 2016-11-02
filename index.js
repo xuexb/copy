@@ -266,16 +266,15 @@
      * @param {string} id    标识
      * @param {string} event 事件名
      */
-    $.fn.copy.FLASHcallback = function (id, event) {
+    $.fn.copy.FLASHcallback = function (id, event, data) {
         var api = Copy.get(id);
 
         if (api) {
-            if (event === 'getText' && api.flashElement && api.flashElement.setText) {
+            if (event === 'mousedown' && api.flashElement && api.flashElement.setText) {
                 api.flashElement.setText(api.getText());
             }
-            else {
-                api.$elem.trigger('copy.' + event);
-            }
+			
+			api.$elem.trigger('copy.' + event. data);
         }
 
         api = null;
