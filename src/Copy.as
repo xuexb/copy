@@ -8,7 +8,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.utils.setTimeout;
-    
+	
     /**
      * 复制插件
 	 *
@@ -17,7 +17,7 @@ package
 	 * @param width - 元素宽
 	 * @param height - 元素高
 	 * @param id - 元素标识, 用来通信
-	 * @param cb - 回调名称， 默认为 $.fn.copy.FLASHcallback
+	 * @param cb - 回调名称， 默认为 FlashCallback
 	 * @param debug - 是否调试模式， 默认为 0
      */
     public class Copy extends Sprite 
@@ -57,8 +57,8 @@ package
 			var self:Object = this;
 			var flashvars:* = Tools.getSwfInfo(self);
 			
-			id = flashvars.id;
-			callbackName = flashvars.cb || '$.fn.copy.FLASHcallback';
+			id = flashvars.id || '1';
+			callbackName = flashvars.cb || 'FlashCallback';
 			if (flashvars.debug) {
 				debug = 1;
 			}
@@ -90,17 +90,25 @@ package
 			{
 				trigger('mouseup', null);
 			});
-			
-			Tools.createMenu(self, {title:'复制组件', url: 'http://baidu.com'}, {title:'测试', disabled: true, url: 'http://baidu.com'});
-			
+
 			// 对外暴露接口
-			// ExternalInterface.addCallback("setText", apiSetText);
-			// ExternalInterface.addCallback("setLinks", apiSetLinks);
+			try 
+			{
+				ExternalInterface.addCallback('setText', apiSetText);
+				ExternalInterface.addCallback('setLinks', apiSetLinks);
+			} 
+			catch (err:Error) 
+			{
+			}
 			
 			// 触发准备完成
 			trigger('ready', null);
         }
 		
+		/**
+		 * 点击回调
+		 * @param	event
+		 */
 		private function clickHandler(event:Event) : void
       	{
          	try 
@@ -113,6 +121,22 @@ package
 				trigger('error', '复制失败');
 			}
       	}
+		
+		/**
+		 * 触发回调
+		 * @param	event
+		 */
+		private function trigger(event:String, data:*) : void
+		{
+			try 
+			{
+				ExternalInterface.call(callbackName, id, event, data);
+			} 
+			catch (err:Error) 
+			{
+				Tools.console(callbackName, id, event, data);
+			}
+		}
 		
 		/**
 		 * 对外接口 - 设置右键菜单接口
@@ -137,16 +161,6 @@ package
 		private function apiSetText(str:String) : void
 		{
 			text = str;
-		}
-		
-		/**
-		 * 触发回调
-		 * @param	event
-		 */
-		private function trigger(event:String, data:*) : void
-		{
-			Tools.console(event, data);
-			// ExternalInterface.call(callbackName, id, event, data);
 		}
     }
     
