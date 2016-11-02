@@ -134,7 +134,7 @@ package
             }
             catch (error:Error)
             {
-                trace(Tools.isObject(args) || Tools.isArray(args) ? JSON.stringify(args, null, 1) : args);
+                trace(Tools.isObject(args) || Tools.isArray(args) ? JSON.stringify(args) : args);
             }
             
             return Tools;
