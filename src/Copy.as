@@ -19,9 +19,9 @@ package
         private function init(e:Event = null):void 
         {
             removeEventListener(Event.ADDED_TO_STAGE, init);
-            trace(1);
+            
             // entry point
-            Tools.console(21).console('ok');
+            Tools.console({a: 1}, 2, 3);
         }
         
     }

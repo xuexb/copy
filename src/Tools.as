@@ -123,18 +123,18 @@ package
          * 输出控制台信息
          *
          * @description 兼容web+flash player, 方便调试
-         * @param {*} str 要输出的信息
+         * @param {*} args 要输出的信息
          * @return {Object} Tools对象
          */
-        public static function console(data:*):Object
+        public static function console(...args:Array):Object
         {
             try
             {
-                ExternalInterface.call('console.log', data);
+                ExternalInterface.call('console.log', args);
             }
             catch (error:Error)
             {
-                trace(Tools.isObject(data) ? (data) : data);
+                trace(Tools.isObject(args) || Tools.isArray(args) ? JSON.stringify(args, null, 1) : args);
             }
             
             return Tools;
