@@ -17,7 +17,7 @@
  *         setLinks - 设置链接
  *     2. as里绑定事件, 在用户触发时使用标识来调用js触发事件
  *     3. js对as暴露的接口:
- *         $.fn.copy.FLASHcallback - 事件回调, 使用标识、事件名来触发
+ *         $.fn.copy.cb - 事件回调, 使用标识、事件名来触发
  *     4. 逻辑:
  *         1. 实例化
  *         2. 输出dom和swf到页面, 并绑定事件
@@ -91,7 +91,7 @@
         }
         else {
             html = [
-                '<embed id=" ' + id + '" name=" ' + id + ' " style="width:100%;height:100%;vertical-align:top;" ',
+                '<embed id="' + id + '" name=" ' + id + ' " style="width:100%;height:100%;vertical-align:top;" ',
                 'src=" ' + path + '" ',
                 'loop="false" ',
                 'menu="false" ',
@@ -266,7 +266,8 @@
      * @param {string} id    标识
      * @param {string} event 事件名
      */
-    $.fn.copy.FLASHcallback = function (id, event, data) {
+    $.fn.copy.cb = function (id, event, data) {
+        console.log(id, event, data)
         var api = Copy.get(id);
 
         if (api) {

@@ -150,7 +150,7 @@ package
          * @example
          *  1, Tools.createMenu(this);
          *  2, Tools.createMenu(this, {title:'复制组件', url: '/'});
-		 *  3, Tools.createMenu(this, [ {title:'复制组件', url: '/'}, {title:'复制组件', url: '/'} ]);
+         *  3, Tools.createMenu(this, [ {title:'复制组件', url: '/'}, {title:'复制组件', url: '/'} ]);
          *  4, Tools.createMenu(this, {title:'复制组件', disabled: true}, {title:'复制组件', url: '/'});
          */
         public static function createMenu(obj:Object, ...args:Array):Object
@@ -165,15 +165,15 @@ package
             // 如果有数据则追加
             if (args && args.length)
             {
-				// 如果第二个参数就传了个数组，那么直接使用，否则认为是对象
-				if (Tools.isArray(args[0])) {
-					data = data.concat(args[0]);
-				}
-				else
-				{
-                	// 包子哥指正,谢谢, js里不data不行... 插不了
-                	data.push.apply(data, args);
-				}
+                // 如果第二个参数就传了个数组，那么直接使用，否则认为是对象
+                if (Tools.isArray(args[0])) {
+                    data = data.concat(args[0]);
+                }
+                else
+                {
+                    // 包子哥指正,谢谢, js里不data不行... 插不了
+                    data.push.apply(data, args);
+                }
             }
             
             // 循环创建菜单
