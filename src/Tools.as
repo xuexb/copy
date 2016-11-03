@@ -149,9 +149,9 @@ package
          *
          * @example
          *  1, Tools.createMenu(this);
-         *  2, Tools.createMenu(this, {title:'复制组件', url: '/'});
-         *  3, Tools.createMenu(this, [ {title:'复制组件', url: '/'}, {title:'复制组件', url: '/'} ]);
-         *  4, Tools.createMenu(this, {title:'复制组件', disabled: true}, {title:'复制组件', url: '/'});
+         *  2, Tools.createMenu(this, {name:'复制组件', url: '/'});
+         *  3, Tools.createMenu(this, [ {name:'复制组件', url: '/'}, {name:'复制组件', url: '/'} ]);
+         *  4, Tools.createMenu(this, {name:'复制组件', disabled: true}, {name:'复制组件', url: '/'});
          */
         public static function createMenu(obj:Object, ...args:Array):Object
         {
@@ -179,7 +179,7 @@ package
             // 循环创建菜单
             data.forEach(function(val:Object, index:int, arr:Array):void
             {
-                var item:ContextMenuItem = new ContextMenuItem(val.title, !!val.line, !val.disabled);
+                var item:ContextMenuItem = new ContextMenuItem(val.name, !!val.line, !val.disabled);
                 
                 if (!val.disabled && val.url)
                 { 

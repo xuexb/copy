@@ -26,7 +26,7 @@
  */
 
 (function ($) {
-    var expando = 'copy_' + $.now();
+    var expando = 'copy_' + $.now() + '_';
 
     /**
      * 复制主体构造函数
@@ -59,14 +59,24 @@
         var width = $elem.outerWidth(true);
         var height = $elem.outerHeight(true);
         var $wrap = $('<div />');
-        var flashvars = 'id=' + id + '&width=' + width + '&height=' + height;
+        var flashvars = 'id=' + id + '&width=' + width + '&height=' + height + '&cb=$.fn.copy.cb';
         var html;
+		
+		// 绑定准备好后就设置右键菜单
+		self.$elem.one('copy.ready', function () {
+			self.setLinks();
+		});
+
+        $(window).on('resize.' + id, function () {
+            self.reset();
+        });
 
         $wrap.css({
             position: 'absolute',
             zIndex: 10000,
             width: width,
-            height: height
+            height: height,
+			left: -9999
         });
 
         $wrap.appendTo(document.body);
@@ -112,11 +122,6 @@
         self.$wrap = $wrap;
 
         self.reset();
-        self.setLinks();
-
-        $(window).on('resize.' + id, function () {
-            self.reset();
-        });
     };
 
     /**
@@ -165,13 +170,19 @@
      */
     Copy.prototype.setLinks = function (links) {
         var self = this;
-
-        links = links || self.options.links;
+		
+		if (links) {
+			self.options.links = links;
+		}
+		else {
+			links = self.options.links;
+		}
 
         // 如果有链接数据, 并且当前swf有设置链接的接口则调用as代码来设置
-        if (links && links.length && self.flashElement && self.flashElement.setLinks) {
+        if (links && self.flashElement && self.flashElement.setLinks) {
             self.flashElement.setLinks(links);
         }
+		
 
         return self;
     };
@@ -195,7 +206,7 @@
     Copy.prototype.getText = function () {
         var text = this.options.text;
 
-        if ($.isFunctioin(text)) {
+        if ($.isFunction(text)) {
             text = text.call(this.$elem.get(0));
         }
 
@@ -267,7 +278,6 @@
      * @param {string} event 事件名
      */
     $.fn.copy.cb = function (id, event, data) {
-        console.log(id, event, data)
         var api = Copy.get(id);
 
         if (api) {
@@ -275,7 +285,7 @@
                 api.flashElement.setText(api.getText());
             }
 			
-			api.$elem.trigger('copy.' + event. data);
+			api.$elem.triggerHandler('copy.' + event, data);
         }
 
         api = null;
@@ -291,11 +301,13 @@
      * @param {string} defaults.links[].name 菜单名称
      * @param {string} defaults.links[].url 菜单链接
      * @param {boolean} defaults.links[].disabled 是否禁用
-     * @param {boolean} defaults.links[].border 是否需要边框
+     * @param {boolean} defaults.links[].line 是否需要边框
      */
     $.fn.copy.defaults = {
         path: '',
         text: '',
         links: []
     };
+	
+	$.fn.copy.version = '0.0.1';
 })(window.jQuery);

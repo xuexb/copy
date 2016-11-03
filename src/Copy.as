@@ -3,6 +3,7 @@ package
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.display.StageScaleMode;
+	import flash.display.StageAlign;
     import flash.system.Security;
     import flash.system.System;
     import flash.events.MouseEvent;
@@ -57,20 +58,22 @@ package
             var self:Object = this;
             var flashvars:* = Tools.getSwfInfo(self);
             
-            id = flashvars.id || '1';
+            id = flashvars.id;
             callbackName = flashvars.cb || 'FlashCallback';
             if (flashvars.debug) {
                 debug = 1;
             }
-            
+			
             // 初始按钮
             button = new Sprite();
+			addChild(button);
             button.buttonMode = true;
             button.useHandCursor = true;
             button.graphics.beginFill(13434624);
-            button.graphics.drawRect(0, 0, Math.floor(flashvars.width || 100), Math.floor(flashvars.height || 100));
+            button.graphics.drawRect(0, 0, Math.floor(flashvars.width), Math.floor(flashvars.height));
+			Tools.console(button.width, button.height);
             //button.alpha = 0;
-            addChild(button);
+            
             
             // 绑定事件
             button.addEventListener(MouseEvent.CLICK, clickHandler);
@@ -100,6 +103,8 @@ package
             catch (err:Error) 
             {
             }
+			
+			ExternalInterface.call('console.log', '1');
             
             // 触发准备完成
             trigger('ready', null);
@@ -136,6 +141,11 @@ package
             {
                 Tools.console(callbackName, id, event, data);
             }
+			
+			// 如果是调试模式
+			if (debug) {
+				Tools.console('debug: ', callbackName, id, event, data);
+			}
         }
         
         /**

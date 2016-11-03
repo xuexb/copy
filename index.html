@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>test</title>
 </head>
 <body>
-    <div style="width: 100px; height: 100px; background-color: #ccc;">loading</div>
+    <div style="width: 200px; height: 100px; background-color: #ccc;">右键菜单</div>
+	<div style="width: 300px; height: 100px; background-color: #ccc;">text回调</div>
     <script src="https://github.xuexb.com/static/jquery.js"></script>
     <script src="./index.js"></script>
     <script>
-        $.fn.copy.defaults.path = '/copy.swf';
-        $('div').copy('测试').copy('真的');
+        $.fn.copy.defaults.path = '/bin/Copy.swf';
+		$.fn.copy.defaults.links = [
+			{
+				name: '默认菜单',
+				url: 'http://baidu.com'
+			}
+		];
 
-        setTimeout(function () {
-            // $('div').copy('destroy')
-        }, 1000)
+        $('div').on('copy.success', function (event, data) {
+			alert('复制成功: ' + data);
+		})
+		
+		$('div').eq(0).copy('测试').copy({
+			text: '真的',
+			links: [
+				{
+					name: '覆盖测试',
+					url: 'http://baidu.com',
+					line: true
+				},
+				{
+					name: '百度PS v1.0.1',
+					disabled: true
+				}
+			]
+		});
+		
+		$('div').eq(1).copy('测试').copy({
+			text: function () {
+				return new Date().getTime();
+			}
+		});
     </script>
 </body>
 </html>
