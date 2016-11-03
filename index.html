@@ -1,67 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>pc全兼容插件</title>
+    <title>aladdin-help</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/normalize.css" media="screen">
+    <link href="lib/font.css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="lib/stylesheet.css" media="screen">
+    <style>
+    .main-content pre {
+        -webkit-overflow-scrolling: touch; 
+    }
+    .site-footer {
+        bottom: 0;
+        margin: 0;
+        padding: 10px 0;
+        position: absolute;
+        left: 0; 
+        width: 100%; 
+    }
+    body {
+        margin-bottom: 85px;
+    }
+    html {
+        min-height: 100%;
+        position: relative;
+        background-color: #fff; 
+    }
+    .project-name a {
+        color: #fff;
+        text-decoration: none;
+    }
+    @media screen and (min-width: 64em) {
+        .site-footer-inner {
+            margin: 0 auto;
+            max-width: 64rem;
+            padding: 0 6rem;
+        }
+    }
+
+    @media screen and (min-width: 42em) and (max-width: 64em) {
+        .site-footer-inner {
+            padding: 0 4rem;
+        }
+    }
+
+    @media screen and (max-width: 42em) {
+        .site-footer-inner {
+            padding: 0 1rem;
+        }
+    }
+
+    .demo {
+        background-color: #ccc;
+        width: 100px;
+        height: 100px;
+    }
+    </style>
+
+    <!-- 引用jQuery -->
+    <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+
+    <!-- 引用复制插件 -->
+    <script src="./index.js"></script>
+
+    <script>
+        $(function () {
+            // 设置默认swf路径, 方便后续直接使用
+            $.fn.copy.defaults.path = './copy.swf';
+
+            $('.demo').on('copy.success', function (event, data) {
+                alert('复制成功, 内容是: ' + data.text);
+            });
+        });
+    </script>
 </head>
 <body>
-	<div id="swf1" style="width: 100px; height: 100px; background-color: #ccc;">最简单使用</div>
-    <div id="swf2" style="width: 200px; height: 100px; background-color: #ccc;">右键菜单</div>
-	<div id="swf3" style="width: 300px; height: 100px; background-color: #ccc;">text回调</div>
-	<div id="swf4" style="width: 300px; height: 100px; background-color: #ccc;">debug模式， 看控制台</div>
-	
-	<div id="swf5" style="width: 300px; height: 100px; background-color: #ccc;">事件</div>
-	
-    <script src="https://github.xuexb.com/static/jquery.js"></script>
-    <script src="./index.js"></script>
-    <script>
-        $.fn.copy.defaults.path = './copy.swf';
-		$.fn.copy.defaults.links = [
-			{
-				name: '默认菜单',
-				url: 'http://baidu.com'
-			}
-		];
+    <section class="page-header">
+        <h1 class="project-name"><a href="https://github.com/xuexb/copy">copy</a></h1>
+        <h2 class="project-tagline">基于jQuery的flash复制插件</h2>
+        <a href="https://github.com/xuexb/copy" class="btn">github</a>
+        <a href="https://github.com/xuexb/copy#Api" class="btn J-hash">api文档</a>
+        <a href="https://github.com/xuexb/copy/archive/master.zip" class="btn">下载</a>
+    </section>
+    <section class="main-content">
+        <div id="main">
+            <h1>copy</h1>
+            <p>基于jQuery的flash复制插件</p>
+            <h2>例子</h2>
+            
+            <h4>普通的复制</h4>
+            <div class="demo1 demo">
+                点我
+            </div>
+            <hr />
+            <script>
+                $(function () {
+                    $('.demo1').copy('我是复制内容');
+                });
+            </script>
 
-        $('div').on('copy.success', function (event, data) {
-			alert('复制成功: ' + data.text);
-		}).on('copy.ready', function (event, data) {
-			console.log('ready', data);
-		});
-		
-		$('#swf1').copy('测试');
-		
-		$('#swf2').copy({
-			text: '真的',
-			links: [
-				{
-					name: '覆盖测试',
-					url: 'http://baidu.com',
-					line: true
-				},
-				{
-					name: '百度PS v1.0.1',
-					disabled: true
-				}
-			]
-		});
-		
-		$('#swf3').copy('测试').copy({
-			text: function () {
-				return new Date().getTime();
-			}
-		});
-		
-		$('#swf4').copy({
-			text: '成功',
-			debug: true
-		});
-		
-		$('#swf5').on('copy.mouseover', function () {
-			$(this).css('background-color', '#09f');
-		}).on('copy.mouseout', function () {
-			$(this).css('background-color', '#ccc');
-		}).copy('看我看我');
-    </script>
+            <h4>开启调试模式</h4>
+            <div class="demo2 demo">
+                点我
+            </div>
+            <hr />
+            <script>
+                $(function () {
+                    $('.demo2').copy({
+                        text: '看控制台啊',
+                        debug: true
+                    });
+                });
+            </script>
+
+            <h4>复制动态的内容</h4>
+            <div class="demo3 demo">
+                点我
+            </div>
+            <textarea id="demo3-input">来吧, 少年.</textarea>
+            <hr />
+            <script>
+                $(function () {
+                    $('.demo3').copy(function () {
+                        return $('#demo3-input').val() || '真空';
+                    });
+                });
+            </script>
+
+            <h4>定义右键菜单</h4>
+            <div class="demo4 demo">
+                点我
+            </div>
+            <hr />
+            <script>
+                $(function () {
+                    $('.demo4').copy({
+                        text: '菜单不错吧?',
+                        links: [
+                            {
+                                name: '我是链接, 可以点击',
+                                url: 'https://xuexb.com?rel=copy.click'
+                            },
+                            {
+                                name: '我上面是不是有个边框?',
+                                line: true
+                            },
+                            {
+                                name: '被禁用的按钮',
+                                disabled: true
+                            }
+                        ]
+                    });
+                });
+            </script>
+
+
+            <h4>链式调用</h4>
+            <div class="demo5 demo">
+                点我
+            </div>
+            <button id="demo5-btn">销毁</button>
+            <hr />
+            <script>
+                $(function () {
+                    var $demo5 = $('.demo5');
+                    var $btn = $('#demo5-btn');
+                    var status = 1;
+
+                    $btn.on('click', function () {
+                        if (status === 1) {
+                            $demo5.copy('destroy');
+                            $btn.text('绑定');
+                            status = 0;
+                        }
+                        else {
+                            $btn.text('销毁');
+                            $demo5.copy('来吧, 互相伤害.');
+                            status = 1;
+                        }
+                    });
+                    $demo5.copy('来吧, 互相伤害.');
+                });
+            </script>
+
+
+            <h4>事件的应用</h4>
+            <div class="demo6 demo">
+                点我
+            </div>
+            <hr />
+            <script>
+                $(function () {
+                    $('.demo6').on('copy.success', function (event, data) {
+                        console.log(data);
+                    }).on('copy.mouseover', function () {
+                        $(this).css('background-color', '#09f');
+                    }).on('copy.mouseout', function () {
+                        $(this).css('background-color', '#ccc');
+                    }).copy('来吧');
+                });
+            </script>
+        </div>
+        <footer class="site-footer">
+            <div class="site-footer-inner">
+                <span class="site-footer-owner"><a href="https://github.com/xuexb/copy">Copy</a> is maintained by <a href="https://xuexb.com/?rel=copy">xuexb 前端小武</a>.</span>
+                <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+            </div>
+        </footer>
+    </section>
 </body>
 </html>
