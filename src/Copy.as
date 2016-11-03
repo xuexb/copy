@@ -3,7 +3,7 @@ package
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.display.StageScaleMode;
-	import flash.display.StageAlign;
+    import flash.display.StageAlign;
     import flash.system.Security;
     import flash.system.System;
     import flash.events.MouseEvent;
@@ -63,10 +63,10 @@ package
             if (flashvars.debug) {
                 debug = 1;
             }
-			
+            
             // 初始按钮
             button = new Sprite();
-			addChild(button);
+            addChild(button);
             button.buttonMode = true;
             button.useHandCursor = true;
             button.graphics.beginFill(13434624);
@@ -102,7 +102,7 @@ package
             catch (err:Error) 
             {
             }
-			
+            
             // 触发准备完成
             trigger('ready', null);
         }
@@ -133,21 +133,21 @@ package
             try 
             {
                 ExternalInterface.call(callbackName, id, event, {
-					callback: callbackName,
-					id: id,
-					event: event,
-					text: text
-				});
+                    callback: callbackName,
+                    id: id,
+                    event: event,
+                    text: text
+                });
             } 
             catch (err:Error) 
             {
                 Tools.console(callbackName, id, event, text);
             }
-			
-			// 如果是调试模式
-			if (debug) {
-				Tools.console('debug: ', callbackName, id, event, text);
-			}
+            
+            // 如果是调试模式
+            if (debug) {
+                Tools.console('debug: ', callbackName, id, event, text);
+            }
         }
         
         /**
