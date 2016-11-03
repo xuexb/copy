@@ -87,7 +87,7 @@ $.fn.copy.defaults = {
 $('Selector').on('copy.success', function (event, data) {
     data = {
         // 事件名
-        event:"success",
+        event: "success",
 
         // 当前实例标识
         id: "copy_1478185663051_5",
