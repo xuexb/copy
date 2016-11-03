@@ -208,7 +208,7 @@ $('#demo').on('copy.success', fn).copy('测试').copy('真的').copy({
 src/
 
 # github pages依赖样式
-lib/
+styles/
 
 # 插件js
 index.js
