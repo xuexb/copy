@@ -4,7 +4,7 @@
   "description": "一个pc全兼容的复制插件",
   "main": "index.js",
   "scripts": {
-    "start": "http-server -p 8087 && open http://127.0.0.1:8087"
+    "start": "http-server -p 8087"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/xuexb/copy#readme",
   "devDependencies": {
-    "http-server": "^0.9.0",
-    "open": "0.0.5"
+    "http-server": "^0.9.0"
   }
 }
