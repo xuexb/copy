@@ -198,7 +198,10 @@
      * @return {Object} this
      */
     Copy.prototype.setText = function (text) {
-        this.options.text = text;
+        // 必须有值时才设置
+        if (text) {
+            this.options.text = text;
+        }
         return this;
     };
 
@@ -301,20 +304,19 @@
      * 默认参数
      *
      * @type {Object}
+     * @param {boolean} [defaults.debug=false] 调试模式
      * @param {string} defaults.path swf所在路径
      * @param {string|Function} defaults.text 复制文本
      * @param {Array} defaults.links 右键链接菜单
      * @param {string} defaults.links[].name 菜单名称
      * @param {string} defaults.links[].url 菜单链接
      * @param {boolean} defaults.links[].disabled 是否禁用
-     * @param {boolean} defaults.links[].line 是否需要边框
+     * @param {boolean} defaults.links[].line 是否需要上边框
      */
     $.fn.copy.defaults = {
+        debug: false,
         path: '',
         text: '',
-        links: [],
-		debug: false
+        links: []
     };
-	
-	$.fn.copy.version = '0.0.1';
 })(window.jQuery);
