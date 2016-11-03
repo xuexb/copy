@@ -80,6 +80,10 @@
         });
 
         $wrap.appendTo(document.body);
+		
+		if (self.options.debug) {
+			flashvars += '&debug=1';
+		}
 
         if (navigator.userAgent.match(/MSIE/)) {
             // IE gets an OBJECT tag
@@ -247,10 +251,12 @@
      */
     $.fn.copy = function (options) {
         if (!$.isPlainObject(options)) {
-            options = $.extend({}, $.fn.copy.defaults, {
+            options = {
                 text: options
-            });
+            };
         }
+		
+		options = $.extend({}, $.fn.copy.defaults, options);
 
         return this.each(function (index, val) {
             var id = $(this).data('copy-id');
@@ -306,7 +312,8 @@
     $.fn.copy.defaults = {
         path: '',
         text: '',
-        links: []
+        links: [],
+		debug: false
     };
 	
 	$.fn.copy.version = '0.0.1';

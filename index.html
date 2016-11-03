@@ -2,11 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>pc全兼容插件</title>
 </head>
 <body>
-    <div style="width: 200px; height: 100px; background-color: #ccc;">右键菜单</div>
-	<div style="width: 300px; height: 100px; background-color: #ccc;">text回调</div>
+	<div id="swf1" style="width: 100px; height: 100px; background-color: #ccc;">最简单使用</div>
+    <div id="swf2" style="width: 200px; height: 100px; background-color: #ccc;">右键菜单</div>
+	<div id="swf3" style="width: 300px; height: 100px; background-color: #ccc;">text回调</div>
+	<div id="swf4" style="width: 300px; height: 100px; background-color: #ccc;">debug模式， 看控制台</div>
+	
+	<div id="swf5" style="width: 300px; height: 100px; background-color: #ccc;">事件</div>
+	
     <script src="https://github.xuexb.com/static/jquery.js"></script>
     <script src="./index.js"></script>
     <script>
@@ -19,10 +24,14 @@
 		];
 
         $('div').on('copy.success', function (event, data) {
-			alert('复制成功: ' + data);
-		})
+			alert('复制成功: ' + data.text);
+		}).on('copy.ready', function (event, data) {
+			console.log('ready', data);
+		});
 		
-		$('div').eq(0).copy('测试').copy({
+		$('#swf1').copy('测试');
+		
+		$('#swf2').copy({
 			text: '真的',
 			links: [
 				{
@@ -37,11 +46,22 @@
 			]
 		});
 		
-		$('div').eq(1).copy('测试').copy({
+		$('#swf3').copy('测试').copy({
 			text: function () {
 				return new Date().getTime();
 			}
 		});
+		
+		$('#swf4').copy({
+			text: '成功',
+			debug: true
+		});
+		
+		$('#swf5').on('copy.mouseover', function () {
+			$(this).css('background-color', '#09f');
+		}).on('copy.mouseout', function () {
+			$(this).css('background-color', '#ccc');
+		}).copy('看我看我');
     </script>
 </body>
 </html>

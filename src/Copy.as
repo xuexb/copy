@@ -70,9 +70,8 @@ package
             button.buttonMode = true;
             button.useHandCursor = true;
             button.graphics.beginFill(13434624);
-            button.graphics.drawRect(0, 0, Math.floor(flashvars.width), Math.floor(flashvars.height));
-			Tools.console(button.width, button.height);
-            //button.alpha = 0;
+            button.graphics.drawRect(0, 0, Math.floor(1000), Math.floor(1000));
+            button.alpha = 0;
             
             
             // 绑定事件
@@ -104,8 +103,6 @@ package
             {
             }
 			
-			ExternalInterface.call('console.log', '1');
-            
             // 触发准备完成
             trigger('ready', null);
         }
@@ -131,20 +128,25 @@ package
          * 触发回调
          * @param   event
          */
-        private function trigger(event:String, data:*) : void
+        private function trigger(event:String, text:*) : void
         {
             try 
             {
-                ExternalInterface.call(callbackName, id, event, data);
+                ExternalInterface.call(callbackName, id, event, {
+					callback: callbackName,
+					id: id,
+					event: event,
+					text: text
+				});
             } 
             catch (err:Error) 
             {
-                Tools.console(callbackName, id, event, data);
+                Tools.console(callbackName, id, event, text);
             }
 			
 			// 如果是调试模式
 			if (debug) {
-				Tools.console('debug: ', callbackName, id, event, data);
+				Tools.console('debug: ', callbackName, id, event, text);
 			}
         }
         
