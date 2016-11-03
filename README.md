@@ -136,7 +136,7 @@ $('#demo').copy({
 
 ### 复制动态的内容
 
-常见于要复制的内容是根据某种条件而实时更新的, 比如文本框输入的值. 回调的`this`是当前被触发的对象.
+常见于要复制的内容是根据某种条件而实时更新的, 比如文本框输入的值. 回调的`this`是当前被触发的`dom`对象.
 
 ```js
 $('#demo').copy(function () {
@@ -198,6 +198,31 @@ $('#demo').on('copy.success', fn).copy('测试').copy('真的').copy({
     ]
 });
 ```
+
+## Develop
+
+使用`flashdevelop`开发, 依赖于`flex SDK 4.6+`编译, 目录说明:
+
+```
+# as源码
+src/
+
+# github pages依赖样式
+lib/
+
+# 插件js
+index.js
+
+# 插件swf, 由src/代码编译生成
+copy.swf
+
+# github pages演示主页
+index.html
+```
+
+#### 开发思路
+
+todo
 
 ## Changelog
 
