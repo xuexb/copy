@@ -61,11 +61,11 @@
         var $wrap = $('<div />');
         var flashvars = 'id=' + id + '&width=' + width + '&height=' + height + '&cb=$.fn.copy.cb';
         var html;
-		
-		// 绑定准备好后就设置右键菜单
-		self.$elem.one('copy.ready', function () {
-			self.setLinks();
-		});
+
+        // 绑定准备好后就设置右键菜单
+        self.$elem.one('copy.ready', function () {
+            self.setLinks();
+        });
 
         $(window).on('resize.' + id, function () {
             self.reset();
@@ -76,14 +76,14 @@
             zIndex: 10000,
             width: width,
             height: height,
-			left: -9999
+            left: -9999
         });
 
         $wrap.appendTo(document.body);
-		
-		if (self.options.debug) {
-			flashvars += '&debug=1';
-		}
+
+        if (self.options.debug) {
+            flashvars += '&debug=1';
+        }
 
         if (navigator.userAgent.match(/MSIE/)) {
             // IE gets an OBJECT tag
@@ -174,19 +174,19 @@
      */
     Copy.prototype.setLinks = function (links) {
         var self = this;
-		
-		if (links) {
-			self.options.links = links;
-		}
-		else {
-			links = self.options.links;
-		}
+
+        if (links) {
+            self.options.links = links;
+        }
+        else {
+            links = self.options.links;
+        }
 
         // 如果有链接数据, 并且当前swf有设置链接的接口则调用as代码来设置
         if (links && self.flashElement && self.flashElement.setLinks) {
             self.flashElement.setLinks(links);
         }
-		
+
 
         return self;
     };
@@ -258,8 +258,8 @@
                 text: options
             };
         }
-		
-		options = $.extend({}, $.fn.copy.defaults, options);
+
+        options = $.extend({}, $.fn.copy.defaults, options);
 
         return this.each(function (index, val) {
             var id = $(this).data('copy-id');
@@ -285,6 +285,7 @@
      *
      * @param {string} id    标识
      * @param {string} event 事件名
+     * @param {Object} data 数据对象
      */
     $.fn.copy.cb = function (id, event, data) {
         var api = Copy.get(id);
@@ -293,8 +294,8 @@
             if (event === 'mousedown' && api.flashElement && api.flashElement.setText) {
                 api.flashElement.setText(api.getText());
             }
-			
-			api.$elem.triggerHandler('copy.' + event, data);
+
+            api.$elem.triggerHandler('copy.' + event, data);
         }
 
         api = null;
