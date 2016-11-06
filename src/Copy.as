@@ -10,13 +10,13 @@ package
     import flash.external.ExternalInterface;
     import flash.utils.setTimeout;
     
+    [SWF(width=100, height=100, frameRate=30)]
+    
     /**
      * 复制插件
      *
      * @author xuexb
      *
-     * @param width - 元素宽
-     * @param height - 元素高
      * @param id - 元素标识, 用来通信
      * @param cb - 回调名称， 默认为 console.log
      * @param debug - 是否调试模式， 默认为 0
@@ -36,7 +36,7 @@ package
         /**
          * 当前要复制的文本
          */
-        private var text:String = '';
+        private var text:String = 'fe.xiaowu@gmail.com';
         
         /**
          * 回调名称
@@ -46,13 +46,13 @@ package
         /**
          * 调试模式
          */
-        private var debug:Number = 0;
+        private var debug:uint = 0;
           
         public function Copy():void 
         {
             super();
             
-            stage.scaleMode = StageScaleMode.NO_SCALE;
+            stage.scaleMode = StageScaleMode.NO_BORDER;
             Security.allowDomain('*');
             
             var self:Object = this;
@@ -69,9 +69,10 @@ package
             addChild(button);
             button.buttonMode = true;
             button.useHandCursor = true;
-            button.graphics.beginFill(13434624);
-            button.graphics.drawRect(0, 0, Math.floor(1000), Math.floor(1000));
-            button.alpha = 0;
+            button.graphics.beginFill(0xFF0000);
+            button.graphics.drawRect(0, 0, Math.floor(100), Math.floor(100));
+            button.alpha = debug ? 0.3 : 0;
+            button.graphics.endFill();
             
             
             // 绑定事件

@@ -59,7 +59,7 @@
         var width = $elem.outerWidth(true);
         var height = $elem.outerHeight(true);
         var $wrap = $('<div />');
-        var flashvars = 'id=' + id + '&width=' + width + '&height=' + height + '&cb=$.fn.copy.cb';
+        var flashvars = 'id=' + id + '&cb=$.fn.copy.cb';
         var html;
 
         // 绑定准备好后就设置右键菜单
