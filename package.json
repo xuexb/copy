@@ -1,6 +1,6 @@
 {
   "name": "copy",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "一个pc全兼容的复制插件",
   "main": "index.js",
   "scripts": {
