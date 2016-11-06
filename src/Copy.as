@@ -18,7 +18,6 @@ package
      * @author xuexb
      *
      * @param id - 元素标识, 用来通信
-     * @param cb - 回调名称， 默认为 console.log
      * @param debug - 是否调试模式， 默认为 0
      */
     public class Copy extends Sprite
@@ -41,7 +40,7 @@ package
         /**
          * 回调名称
          */
-        private var callbackName:String = '';
+        private var callbackName:String = '$.fn.copy.cb';
         
         /**
          * 调试模式
@@ -59,7 +58,6 @@ package
             var flashvars:* = Tools.getSwfInfo(self);
             
             id = flashvars.id;
-            callbackName = flashvars.cb || 'console.log';
             if (flashvars.debug)
             {
                 debug = 1;

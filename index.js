@@ -25,7 +25,7 @@
  *         4. 用户在点击时触发getText事件, js使用as的接口把最新的文本设置给as, as来复制到粘贴板
  */
 
-(function ($) {
+(function (window, $) {
     var expando = 'copy_' + $.now() + '_';
 
     /**
@@ -320,4 +320,4 @@
         text: '',
         links: []
     };
-})(window.jQuery);
+})(window, jQuery);
