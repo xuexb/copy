@@ -19,7 +19,7 @@ package
          * @param ...args
          * @return Console
          */
-        public static function error(...args:Array):Object
+        public static function error(... args:Array):Object
         {
             return print('console.error', args);
         }
@@ -29,7 +29,7 @@ package
          * @param ...args
          * @return Console
          */
-        public static function log(...args:Array):Object
+        public static function log(... args:Array):Object
         {
             return print('console.log', args);
         }
@@ -39,7 +39,7 @@ package
          * @param ...args
          * @return Console
          */
-        public static function warn(...args:Array):Object
+        public static function warn(... args:Array):Object
         {
             return print('console.warn', args);
         }
@@ -54,13 +54,16 @@ package
         {
             try
             {
-                if (data.length === 1) {
+                if (data.length === 1)
+                {
                     ExternalInterface.call(command, data[0]);
                 }
-                else if (data.length === 2) {
+                else if (data.length === 2)
+                {
                     ExternalInterface.call(command, data[0], data[1]);
                 }
-                else {
+                else
+                {
                     ExternalInterface.call(command, JSON.stringify(data, null, 2));
                 }
             }

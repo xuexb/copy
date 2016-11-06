@@ -1,4 +1,4 @@
-package 
+package
 {
     import flash.display.Sprite;
     import flash.events.Event;
@@ -10,7 +10,7 @@ package
     import flash.external.ExternalInterface;
     import flash.utils.setTimeout;
     
-    [SWF(width=100, height=100, frameRate=30)]
+    [SWF(width = 100, height = 100, frameRate = 30)];
     
     /**
      * 复制插件
@@ -21,7 +21,7 @@ package
      * @param cb - 回调名称， 默认为 console.log
      * @param debug - 是否调试模式， 默认为 0
      */
-    public class Copy extends Sprite 
+    public class Copy extends Sprite
     {
         /**
          * 按钮对象
@@ -47,8 +47,8 @@ package
          * 调试模式
          */
         private var debug:uint = 0;
-          
-        public function Copy():void 
+        
+        public function Copy():void
         {
             super();
             
@@ -60,7 +60,8 @@ package
             
             id = flashvars.id;
             callbackName = flashvars.cb || 'console.log';
-            if (flashvars.debug) {
+            if (flashvars.debug)
+            {
                 debug = 1;
             }
             
@@ -74,33 +75,32 @@ package
             button.alpha = debug ? 0.3 : 0;
             button.graphics.endFill();
             
-            
             // 绑定事件
             button.addEventListener(MouseEvent.CLICK, clickHandler);
-            button.addEventListener(MouseEvent.MOUSE_OVER, function(event:Event) : void
+            button.addEventListener(MouseEvent.MOUSE_OVER, function(event:Event):void
             {
                 trigger('mouseover', null);
             });
-            button.addEventListener(MouseEvent.MOUSE_OUT, function(event:Event) : void
+            button.addEventListener(MouseEvent.MOUSE_OUT, function(event:Event):void
             {
                 trigger('mouseout', null);
             });
-            button.addEventListener(MouseEvent.MOUSE_DOWN,function(event:Event) : void
+            button.addEventListener(MouseEvent.MOUSE_DOWN, function(event:Event):void
             {
                 trigger('mousedown', null);
             });
-            button.addEventListener(MouseEvent.MOUSE_UP,function(event:Event) : void
+            button.addEventListener(MouseEvent.MOUSE_UP, function(event:Event):void
             {
                 trigger('mouseup', null);
             });
-
+            
             // 对外暴露接口
-            try 
+            try
             {
                 ExternalInterface.addCallback('setText', apiSetText);
                 ExternalInterface.addCallback('setLinks', apiSetLinks);
-            } 
-            catch (err:Error) 
+            }
+            catch (err:Error)
             {
             }
             
@@ -112,14 +112,14 @@ package
          * 点击回调
          * @param   event
          */
-        private function clickHandler(event:Event) : void
+        private function clickHandler(event:Event):void
         {
-            try 
+            try
             {
                 System.setClipboard(text);
                 trigger('success', text);
-            } 
-            catch (err:Error) 
+            }
+            catch (err:Error)
             {
                 trigger('error', '复制失败');
             }
@@ -129,35 +129,21 @@ package
          * 触发回调
          * @param   event
          */
-        private function trigger(event:String, text:*) : void
+        private function trigger(event:String, text:*):void
         {
-            try 
+            try
             {
-                ExternalInterface.call(callbackName, id, event, {
-                    callback: callbackName,
-                    id: id,
-                    event: event,
-                    text: text
-                });
-            } 
-            catch (err:Error) 
+                ExternalInterface.call(callbackName, id, event, {callback: callbackName, id: id, event: event, text: text});
+            }
+            catch (err:Error)
             {
-                Console.error({
-                    callbackName: callbackName,
-                    id: id,
-                    event: event,
-                    text: text
-                });
+                Console.error({callbackName: callbackName, id: id, event: event, text: text});
             }
             
             // 如果是调试模式
-            if (debug) {
-                Console.log({
-                    callbackName: callbackName,
-                    id: id,
-                    event: event,
-                    text: text
-                });
+            if (debug)
+            {
+                Console.log({callbackName: callbackName, id: id, event: event, text: text});
             }
         }
         
@@ -165,13 +151,13 @@ package
          * 对外接口 - 设置右键菜单接口
          * @param   links
          */
-        private function apiSetLinks(links:Array) : void
+        private function apiSetLinks(links:Array):void
         {
-            try 
+            try
             {
                 Tools.createMenu(this, links);
-            } 
-            catch (err:Error) 
+            }
+            catch (err:Error)
             {
                 trigger('error', '创建菜单失败');
             }
@@ -181,10 +167,10 @@ package
          * 对外接口 - 设置复制文字
          * @param   links
          */
-        private function apiSetText(str:String) : void
+        private function apiSetText(str:String):void
         {
             text = str;
         }
     }
-    
+
 }

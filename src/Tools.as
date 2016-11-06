@@ -1,4 +1,4 @@
-package 
+package
 {
     import flash.display.LoaderInfo;
     import flash.events.ContextMenuEvent;
@@ -75,7 +75,7 @@ package
         {
             return typeof str === 'string';
         }
-
+        
         /**
          * 判断是否为空对象
          *
@@ -84,17 +84,19 @@ package
          */
         public static function isEmptyObject(obj:*):Boolean
         {
-            if (!Tools.isObject(obj)) {
+            if (!Tools.isObject(obj))
+            {
                 return false;
             }
             
-            for (var key:String in obj) {
+            for (var key:String in obj)
+            {
                 return false;
             }
             
             return true;
         }
-
+        
         /**
          * 判断是否为对象
          *
@@ -131,7 +133,7 @@ package
          *  3, Tools.createMenu(this, [ {name:'复制组件', url: '/'}, {name:'复制组件', url: '/'} ]);
          *  4, Tools.createMenu(this, {name:'复制组件', disabled: true}, {name:'复制组件', url: '/'});
          */
-        public static function createMenu(obj:Object, ...args:Array):Object
+        public static function createMenu(obj:Object, ... args:Array):Object
         {
             // 菜单对象
             var Menu:ContextMenu = obj.contextMenu = new ContextMenu();
@@ -144,7 +146,8 @@ package
             if (args && args.length)
             {
                 // 如果第二个参数就传了个数组，那么直接使用，否则认为是对象
-                if (Tools.isArray(args[0])) {
+                if (Tools.isArray(args[0]))
+                {
                     data = data.concat(args[0]);
                 }
                 else
@@ -160,7 +163,7 @@ package
                 var item:ContextMenuItem = new ContextMenuItem(val.name, !!val.line, !val.disabled);
                 
                 if (!val.disabled && val.url)
-                { 
+                {
                     // 如果有打开的页面地址且为
                     item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, function(event:ContextMenuEvent):void
                     {
