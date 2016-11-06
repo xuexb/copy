@@ -18,7 +18,7 @@ package
      * @param width - 元素宽
      * @param height - 元素高
      * @param id - 元素标识, 用来通信
-     * @param cb - 回调名称， 默认为 FlashCallback
+     * @param cb - 回调名称， 默认为 console.log
      * @param debug - 是否调试模式， 默认为 0
      */
     public class Copy extends Sprite 
@@ -52,14 +52,14 @@ package
         {
             super();
             
-            stage.scaleMode = StageScaleMode.EXACT_FIT;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
             Security.allowDomain('*');
             
             var self:Object = this;
             var flashvars:* = Tools.getSwfInfo(self);
             
             id = flashvars.id;
-            callbackName = flashvars.cb || 'FlashCallback';
+            callbackName = flashvars.cb || 'console.log';
             if (flashvars.debug) {
                 debug = 1;
             }
@@ -141,12 +141,22 @@ package
             } 
             catch (err:Error) 
             {
-                Tools.console(callbackName, id, event, text);
+                Console.error({
+                    callbackName: callbackName,
+                    id: id,
+                    event: event,
+                    text: text
+                });
             }
             
             // 如果是调试模式
             if (debug) {
-                Tools.console('debug: ', callbackName, id, event, text);
+                Console.log({
+                    callbackName: callbackName,
+                    id: id,
+                    event: event,
+                    text: text
+                });
             }
         }
         

@@ -2,7 +2,6 @@ package
 {
     import flash.display.LoaderInfo;
     import flash.events.ContextMenuEvent;
-    import flash.external.ExternalInterface;
     import flash.net.URLRequest;
     import flash.net.navigateToURL;
     import flash.ui.ContextMenu;
@@ -117,27 +116,6 @@ package
         private static function isType(obj:*, type:String):Boolean
         {
             return {}.toString.call(obj) == "[object " + type + "]";
-        }
-        
-        /**
-         * 输出控制台信息
-         *
-         * @description 兼容web+flash player, 方便调试
-         * @param {*} args 要输出的信息
-         * @return {Object} Tools对象
-         */
-        public static function console(...args:Array):Object
-        {
-            try
-            {
-                ExternalInterface.call('console.log', args);
-            }
-            catch (error:Error)
-            {
-                trace(Tools.isObject(args) || Tools.isArray(args) ? JSON.stringify(args) : args);
-            }
-            
-            return Tools;
         }
         
         /**
