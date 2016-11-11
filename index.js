@@ -83,6 +83,15 @@
 
         if (self.options.debug) {
             flashvars += '&debug=1';
+
+            if (path.indexOf('?') > -1) {
+                path += '&';
+            }
+            else {
+                path += '?';
+            }
+
+            path += 't=' + $.now();
         }
 
         if (navigator.userAgent.match(/MSIE/)) {
