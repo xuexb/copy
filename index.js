@@ -110,7 +110,8 @@
                     '<param name="bgcolor" value="#ffffff" />',
                     '<param name="flashvars" value="' + flashvars + '"/>',
                     '<param name="wmode" value="transparent"/>',
-                '</object>'].join('');
+                '</object>'
+            ].join('');
         }
         else {
             html = [
