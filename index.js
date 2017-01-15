@@ -239,7 +239,7 @@
     /**
      * 唯一标识
      *
-     * @type {Number}
+     * @type {number}
      */
     Copy.id = 1;
 
@@ -262,6 +262,7 @@
      * @return {Object}         jQuery对象
      */
     $.fn.copy = function (options) {
+        // 如果不是对象, 则认为是字符串
         if (!$.isPlainObject(options)) {
             options = {
                 text: options
@@ -270,6 +271,7 @@
 
         options = $.extend({}, $.fn.copy.defaults, options);
 
+        // 返回jQuery使其链式
         return this.each(function (index, val) {
             var id = $(this).data('copy-id');
 
@@ -283,6 +285,7 @@
                 // 否则重新设置文本和链接
                 return Copy.get(id).setText(options.text).setLinks(options.links).reset();
             }
+
             if (options.text !== 'destroy') {
                 new Copy(options, this);
             }
